@@ -1,0 +1,486 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking de Bebedores</title>
+
+
+  
+<link rel="stylesheet" href="css/ranking.css">
+</head>
+  
+<body>
+<script src="js/ranking.js"></script>
+<h1 style="text-align: center; font-size: 2.5em; color: #000000; font-weight: bold; margin: 20px 0; background: #fdd835; padding: 10px; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+  Você está pronto para o DESAFIO?
+</h1>
+<h2 style="text-align: center; font-size: 1.0em; color: #333; font-weight: normal; margin: 10px 0;">
+  Fique entre os maiores cervejeiros e concorra a vários prêmios. Mas não pense que será tão fácil quanto parece!
+</h2>
+
+  <!-- Container da roleta -->
+     <div class="roleta-container" id="roleta-container">
+        <button class="fechar-btn" id="fechar-btn">X</button>
+        <img src="https://images.vexels.com/media/users/3/151205/isolated/lists/8857efb275fbf2435db40a222d05b1e6-icone-da-roda-de-roleta.png" class="roleta" id="roleta" alt="Roleta">
+        <div class="resultado-container" id="resultado"></div>
+    </div>
+
+
+    <!-- Botão flutuante para abrir a roleta -->
+    <button class="abrir-roleta-btn" id="abrir-roleta-btn">Roleta de Desafios</button>
+    <button class="buttondice" onclick="abrirDados()">Rolar dados</button>
+    <button class="abrir-garrafa-btn">Girar Garrafa</button>
+  
+ <script>
+    const desafios = [
+      "Tomar um shot de bebida escolhida pelo grupo.",
+      "Imitar alguém famoso por 1 minuto.",
+      "Fazer uma rodada de piadas – o último a rir toma um shot.",
+      "Dançar sem música por 30 segundos.",
+      "Fazer uma declaração de amor dramática para um objeto no bar.",
+      "Cantar o refrão de uma música aleatória escolhida pelos amigos.",
+      "Rodada de 'Eu Nunca' – quem já fez, bebe.",
+      "Trocar de cadeira com alguém até a próxima rodada.",
+      "Postar uma selfie engraçada no grupo de amigos.",
+      "Beber a próxima rodada com a mão não dominante.",
+      "Contar uma história embaraçosa de um amigo (com permissão).",
+      "Escolher alguém para fazer uma imitação de animal.",
+      "Dar uma volta no bar fingindo ser um personagem de filme.",
+      "Fazer flexões ou agachamentos no meio do bar (quantidade escolhida pelo grupo).",
+      "Inventar um brinde inusitado para todos.",
+      "Fazer uma careta engraçada e manter por 30 segundos.",
+      "Desafiar alguém para um duelo de 'pedra, papel e tesoura' – quem perder, bebe.",
+      "Colocar gelo na boca e segurar até derreter completamente.",
+      "Escolher alguém para beber o próximo drink por você.",
+      "Caminhar como se estivesse na passarela por 1 minuto.",
+      "Beber um copo de água em 5 segundos (um alívio para os que não querem álcool).",
+      "Tirar um item de roupa (casaco, boné, etc.) até o fim da rodada.",
+      "Fazer uma pose de yoga por 30 segundos.",
+      "Falar uma palavra proibida durante a próxima rodada (palavra escolhida pelo grupo).",
+      "Fingir estar numa chamada telefônica embaraçosa por 1 minuto.",
+      "Trocar um sapato com alguém até o fim da rodada.",
+      "Contar uma piada horrível de propósito.",
+      "Fazer um sotaque engraçado até a próxima rodada.",
+      "Rodar uma garrafa para escolher alguém que vai beber um shot com você.",
+      "Fazer um brinde na língua do 'P' ou qualquer outra forma engraçada de falar."
+    ];
+
+    // Função para girar a roleta
+    function girarRoleta() {
+      const roleta = document.getElementById("roleta");
+      const resultado = document.getElementById("resultado");
+
+      // Gira a roleta entre 3 a 7 voltas
+      const girarGraus = Math.floor(1080 + Math.random() * 720);
+      roleta.style.transform = `rotate(${girarGraus}deg)`;
+
+      // Seleciona um desafio aleatório
+      const desafio = desafios[Math.floor(Math.random() * desafios.length)];
+
+      // Exibe o desafio após a roleta parar
+      setTimeout(() => {
+        resultado.textContent = `Desafio: ${desafio}`;
+        mostrarResultado(resultado.textContent);
+      }, 4000); // Tempo de giro
+    }
+
+    // Abrir a roleta
+    document.querySelector(".abrir-roleta-btn").addEventListener("click", () => {
+      document.getElementById("roleta-container").style.display = "block";
+    });
+
+    // Fechar a roleta
+    document.getElementById("fechar-btn").addEventListener("click", () => {
+      document.getElementById("roleta-container").style.display = "none";
+      document.getElementById("resultado").textContent = ""; // Limpa o resultado anterior
+      document.getElementById("roleta").style.transform = "rotate(0deg)"; // Reseta a rotação
+    });
+
+    // Girar a roleta ao clicar nela
+    document.getElementById("roleta").addEventListener("click", girarRoleta);
+
+    // Função para mostrar o resultado com animação
+    function mostrarResultado(resultado) {
+      const resultadoContainer = document.getElementById('resultado');
+      resultadoContainer.textContent = resultado;
+
+      // Adiciona a animação ao resultado
+      resultadoContainer.style.display = 'block';
+      resultadoContainer.classList.add('fadeIn');
+
+      // Remove a animação após ela acontecer, para ser reaplicada depois
+      setTimeout(() => {
+        resultadoContainer.classList.remove('fadeIn');
+      }, 1000);
+    }
+  </script>
+
+    <!-- Modal da roleta -->
+    <div id="roletaModal" class="modal">
+        <div class="modal-content">
+            <h2>Roleta de Desafios</h2>
+            <p>Aqui vai o conteúdo da roleta.</p>
+            <button class="button" onclick="fecharModal('roletaModal')">Fechar</button>
+        </div>
+    </div>
+
+    <!-- Modal dos dados -->
+    <div id="dadosModal" class="modal">
+        <div class="modal-content">
+            <h2>Rolar Dados</h2>
+            <div class="dice-container">
+                <img id="dado1" class="dice" src="https://www.gifss.com/economia/juego/images/dados-4.gif" alt="Dado 1">
+                <img id="dado2" class="dice" src="https://www.gifss.com/economia/juego/images/dados-4.gif" alt="Dado 2">
+            </div>
+            <button class="button" onclick="rolarDados()">Rolar Novamente</button>
+            <button class="button" onclick="fecharModal('dadosModal')">Fechar</button>
+        </div>
+    </div>
+
+    <script>
+        // Função para abrir o modal dos dados
+        function abrirDados() {
+            document.getElementById('dadosModal').style.display = 'flex';
+            rolarDados(); // Rola os dados quando o modal for aberto
+        }
+
+        // Função para fechar qualquer modal
+        function fecharModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Função para rolar os dados com animação
+        function rolarDados() {
+            const dado1 = document.getElementById('dado1');
+            const dado2 = document.getElementById('dado2');
+
+            // Exibe novamente a imagem de rolagem dos dados
+            dado1.outerHTML = `<img id="dado1" class="dice" src="https://www.gifss.com/economia/juego/images/dados-4.gif" alt="Dado 1">`;
+            dado2.outerHTML = `<img id="dado2" class="dice" src="https://www.gifss.com/economia/juego/images/dados-4.gif" alt="Dado 2">`;
+
+            const novoDado1 = document.getElementById('dado1');
+            const novoDado2 = document.getElementById('dado2');
+
+            // Adiciona a classe de animação aos dados
+            novoDado1.classList.add('rolling');
+            novoDado2.classList.add('rolling');
+
+            // Define os valores finais dos dados após o tempo de rolagem
+            setTimeout(() => {
+                const valor1 = Math.floor(Math.random() * 6) + 1;
+                const valor2 = Math.floor(Math.random() * 6) + 1;
+
+                // Remove a animação
+                novoDado1.classList.remove('rolling');
+                novoDado2.classList.remove('rolling');
+
+                // Substitui as imagens por blocos vermelhos com os números
+                novoDado1.outerHTML = `<div id="dado1" class="dice">${valor1}</div>`;
+                novoDado2.outerHTML = `<div id="dado2" class="dice">${valor2}</div>`;
+
+            }, 2000); // Tempo de rolagem de 2 segundos
+        }
+    </script>
+
+  <!-- Container e imagem da garrafa -->
+  <div class="garrafa-container">
+    <button class="fechar-garrafa-btn" id="fecharGarrafaBtn">X</button>
+    <img src="https://static.vecteezy.com/system/resources/previews/024/096/916/non_2x/beer-bottle-drink-free-png.png" alt="Garrafa" class="garrafa-img" id="garrafa">
+  </div>
+
+  <script>
+    // Variável para controle de rotação
+    let rotation = 0;
+
+    // Botão para abrir a garrafa
+    document.querySelector(".abrir-garrafa-btn").addEventListener("click", function() {
+      // Exibe a garrafa e aplica a rotação inicial
+      const garrafa = document.querySelector("#garrafa");
+      document.querySelector(".garrafa-container").style.display = "block";
+      garrafa.style.display = "block";
+      
+      // Inicializa a rotação da garrafa ao abrir
+      rotation += Math.floor(Math.random() * (1080 - 720 + 1)) + 720;
+      garrafa.style.transform = `rotate(${rotation}deg)`;
+    });
+
+    // Função para girar a garrafa ao clicar nela
+    document.getElementById("garrafa").addEventListener("click", function() {
+      // Aumenta o valor da rotação de forma aleatória entre 720 e 1080 graus
+      rotation += Math.floor(Math.random() * (1080 - 720 + 1)) + 720;
+      
+      // Aplica a rotação à imagem
+      this.style.transform = `rotate(${rotation}deg)`;
+    });
+
+    // Botão para fechar a garrafa
+    document.getElementById("fecharGarrafaBtn").addEventListener("click", function() {
+      // Oculta a garrafa
+      document.querySelector(".garrafa-container").style.display = "none";
+      document.querySelector("#garrafa").style.display = "none";
+    });
+  </script>
+  
+ 
+ <main>
+        <section id="home">
+            <!-- Cabeçalho com logo, cronômetro e troféus -->
+            <div class="header-section">
+                <div class="header-left">
+                    <img src="https://cdn.shopify.com/s/files/1/0719/1314/4596/files/Copia_de_OPENBEER.png?v=1726051224" alt="Descrição da Imagem" class="responsive-img">
+                    <div class="cronometro-container">
+                        <p>Início da competição: <span id="data-inicio">10/09/2024 - 14:00</span></p>
+                        <p>Término da competição: <span id="data-fim"></span></p>
+                        <p>Tempo restante: <span id="timer"></span></p>
+                    </div>
+                    <div class="trofeus-medalhas">
+                        <div class="posicao">
+                            <img src="https://cdn.shopify.com/s/files/1/0719/1314/4596/files/Copia_de_Copia_de_Post_de_Instagram_rustico_marrom_de_happy_hour.png?v=1725989095" alt="Medalha de Bronze">
+                            <div class="info">
+                                <span class="numero">3º</span>
+                                <span id="nome-terceiro"></span>
+                            </div>
+                        </div>
+                        <div class="posicao destaque">
+                            <img src="https://cdn.shopify.com/s/files/1/0719/1314/4596/files/banana-removebg-preview.png?v=1725989022" alt="Troféu de Ouro">
+                            <div class="info">
+                                <span class="numero">1º</span>
+                                <span id="nome-primeiro"></span>
+                            </div>
+                        </div>
+                        <div class="posicao">
+                            <img src="https://cdn.shopify.com/s/files/1/0719/1314/4596/files/milho-removebg-preview.png?v=1725989083" alt="Medalha de Prata">
+                            <div class="info">
+                                <span class="numero">2º</span>
+                                <span id="nome-segundo"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="mensagem-conquista" class="conquista"></div>
+                  <!-- Lista de Ranking -->
+          <!-- Lista de Ranking -->
+                   <div class="ranking-container">
+                   <div class="ranking-list">
+                   <h2>Ranking Geral</h2>
+                   </div>
+                   <table class="ranking-table">
+                    <thead>
+                      <tr>
+                  <th>P.</th>
+                  <th>Nome</th>
+                  <th>Litros</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+                    <tbody></tbody>
+              </table>
+                    </div>
+            </div>
+        </div>
+          </div>
+          <div class="header-right">
+          <div class="container">
+            <!-- Gráfico -->
+            <div class="grafico">
+                <canvas id="grafico"></canvas>
+               </div>
+          </div>
+
+        <!-- Importação da biblioteca Chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <!-- Adicione isso ao seu HTML -->
+
+        </section>
+            <section id="premios-exclusivos" style="background-color: #ffe600; padding: 20px; margin-top: 30px; border-radius: 10px; text-align: center;">
+  <h2 style="font-size: 2.5rem; color: #000;">🏆 Prêmios Exclusivos para os Top Colocados 🏆</h2>
+  <p style="font-size: 1.5rem; color: #333;">Os maiores bebedores terão a chance de ganhar prêmios incríveis!</p>
+  
+  <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+    <div class="premio" id="premio-1" style="flex: 1; text-align: center;">
+      <img src="https://cdn.shopify.com/s/files/1/0719/1314/4596/files/banana-removebg-preview.png?v=1725989022" alt="Medalha de Ouro" style="width: 80px;">
+      <h3>1º Lugar</h3>
+      <p id="descricao-1">Vale-compras de R$ 500,00</p>
+    </div>
+    
+    <div class="premio" id="premio-2" style="flex: 1; text-align: center;">
+      <img src="https://cdn.shopify.com/s/files/1/0719/1314/4596/files/milho-removebg-preview.png?v=1725989083" alt="Medalha de Prata" style="width: 80px;">
+      <h3>2º Lugar</h3>
+      <p id="descricao-2">Vale-compras de R$ 300,00</p>
+    </div>
+
+    <div class="premio" id="premio-3" style="flex: 1; text-align: center;">
+      <img src="https://cdn.shopify.com/s/files/1/0719/1314/4596/files/Copia_de_Copia_de_Post_de_Instagram_rustico_marrom_de_happy_hour.png?v=1725989095" alt="Medalha de Bronze" style="width: 80px;">
+      <h3>3º Lugar</h3>
+      <p id="descricao-3">Vale-compras de R$ 100,00</p>
+    </div>
+  </div>
+</section>
+            
+        <!-- Footer -->
+        <footer>
+            <div class="input-container">
+                <input type="text" id="novoParticipante" placeholder="Nome do Participante">
+                <input type="number" id="litrosConsumidos" placeholder="Litros Consumidos" step="0.1">
+                <button onclick="adicionarParticipante()">Adicionar</button>
+                <button id="removerParticipante" onclick="removerParticipante()">Remover Participante</button>
+            </div>
+            <div class="cronometro-footer">
+                <p>Início da competição: <span id="data-inicio-footer"></span></p>
+                <p>Término da competição: <span id="data-fim-footer"></span></p>
+                <p>Tempo restante: <span id="timer-footer"></span></p>
+                <label for="duracao">Definir Duração (minutos):</label>
+                <input type="number" id="duracao" name="duracao" min="1" value="60">
+                <button onclick="iniciarCronometro()">Iniciar Competição</button>
+                <button onclick="reiniciarCronometro()">Reiniciar Competição</button>
+            </div>
+          <div class="premios-selecionar">
+        <h3>Escolha os Prêmios</h3>
+        <div>
+            <label for="premio-1">1º Lugar:</label>
+            <input type="text" id="input-premio-1" placeholder="Descrição do prêmio">
+        </div>
+        <div>
+            <label for="premio-2">2º Lugar:</label>
+            <input type="text" id="input-premio-2" placeholder="Descrição do prêmio">
+        </div>
+        <div>
+            <label for="premio-3">3º Lugar:</label>
+            <input type="text" id="input-premio-3" placeholder="Descrição do prêmio">
+        </div>
+        <button onclick="atualizarPremios()">Atualizar Prêmios</button>
+    </div>
+<script>
+    // Funções auxiliares para manipular cookies
+    function setCookie(name, value, days) {
+        const expires = "expires=" + new Date(new Date().getTime() + days * 24 * 60 * 60 * 1000).toUTCString();
+        document.cookie = name + "=" + (value || "") + ";" + expires + ";path=/";
+    }
+
+    function getCookie(name) {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
+    function deleteCookie(name) {
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    }
+
+    // Função para atualizar os prêmios
+    function atualizarPremios() {
+        const premio1 = document.getElementById('input-premio-1').value;
+        const premio2 = document.getElementById('input-premio-2').value;
+        const premio3 = document.getElementById('input-premio-3').value;
+
+        // Atualiza a seção de prêmios
+        document.getElementById('descricao-1').textContent = premio1;
+        document.getElementById('descricao-2').textContent = premio2;
+        document.getElementById('descricao-3').textContent = premio3;
+
+        // Salva os prêmios em cookies
+        setCookie('premio1', premio1, 7); // Expira em 7 dias
+        setCookie('premio2', premio2, 7);
+        setCookie('premio3', premio3, 7);
+    }
+
+    // Função para carregar os prêmios
+    function carregarPremios() {
+        const premio1 = getCookie('premio1');
+        const premio2 = getCookie('premio2');
+        const premio3 = getCookie('premio3');
+
+        // Atualiza os campos e descrições se os cookies existirem
+        if (premio1) {
+            document.getElementById('descricao-1').textContent = premio1;
+            document.getElementById('input-premio-1').value = premio1;
+        }
+
+        if (premio2) {
+            document.getElementById('descricao-2').textContent = premio2;
+            document.getElementById('input-premio-2').value = premio2;
+        }
+
+        if (premio3) {
+            document.getElementById('descricao-3').textContent = premio3;
+            document.getElementById('input-premio-3').value = premio3;
+        }
+    }
+
+    // Carrega os prêmios ao carregar a página
+    window.onload = function() {
+        carregarPremios();
+    };
+</script>
+
+
+
+          
+
+                      </footer>
+            
+
+    </main>
+             <script>
+            let intervalId;
+
+function iniciarCronometro() {
+    // Obtém a data atual
+    const agora = new Date();
+    document.getElementById('data-inicio').innerText = formatarData(agora);
+
+    // Define a duração com base no input
+    const duracao = parseInt(document.getElementById('duracao').value);
+    
+    // Calcula o término da competição
+    const termino = new Date(agora.getTime() + duracao * 60000); // Adiciona a duração em minutos
+    document.getElementById('data-fim').innerText = formatarData(termino);
+
+    // Atualiza o cronômetro a cada segundo
+    intervalId = setInterval(() => {
+        const agoraAtualizada = new Date();
+        const tempoRestante = termino - agoraAtualizada;
+        
+        if (tempoRestante <= 0) {
+            clearInterval(intervalId);
+            document.getElementById('timer').innerText = "Competição encerrada!";
+        } else {
+            document.getElementById('timer').innerText = formatarTempoRestante(tempoRestante);
+        }
+    }, 1000);
+}
+
+function reiniciarCronometro() {
+    clearInterval(intervalId); // Limpa o cronômetro atual
+    iniciarCronometro(); // Reinicia o cronômetro
+}
+
+function formatarData(data) {
+    const dia = data.getDate().toString().padStart(2, '0');
+    const mes = (data.getMonth() + 1).toString().padStart(2, '0');
+    const ano = data.getFullYear();
+    const horas = data.getHours().toString().padStart(2, '0');
+    const minutos = data.getMinutes().toString().padStart(2, '0');
+    
+    return `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
+}
+
+function formatarTempoRestante(tempo) {
+    const minutos = Math.floor((tempo % (1000 * 60 * 60)) / (1000 * 60));
+    const segundos = Math.floor((tempo % (1000 * 60)) / 1000);
+    return `${minutos}m ${segundos}s`;
+}
+
+
+          </script>
+        </footer>
+    </div>
+</body>
+</html>
